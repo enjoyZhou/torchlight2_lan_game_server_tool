@@ -88,15 +88,20 @@ def main():
     # setup socket
     udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     udp.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    udp.bind(('', SRC_PORT))
+    udp.bind(('192.168.3.227', SRC_PORT))
+    # udp.connect(('', SRC_PORT))
+
+    udp.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
 
     # start forwarding
     print('=' * 5, get_time(), 'Start detecting room info\n')
     send_thread = None  # type: threading.Thread
     thread_stop_flag = False
     while True:
+        print('receive msg ...')
         # receive msg
-        data, addr = udp.recvfrom(1024)
+        # data, addr = udp.recvfrom(1024)
+        data, addr = udp.recv(1024)
         print('=' * 5, get_time(), 'Receive message. len:', len(data))
         print(data, addr)
         if len(data) <= 30:  # todo: confirm len

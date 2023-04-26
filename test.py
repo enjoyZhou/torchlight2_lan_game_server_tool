@@ -1,3 +1,6 @@
+# https://www.wireshark.org/download.html
+# 需要提前安装好wireshark，基于libpcap抓包
+
 from scapy.all import *
 import socket
 
